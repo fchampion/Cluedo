@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         DatabaseManager.initializeInstance(dbHelper);
         GroupeADO groupeADO = new GroupeADO();
 
-        //insertSQLiteData();
+        insertSQLiteData();
         lesGroupes = new ArrayList<>();
         lesGroupes = groupeADO.getAllElements();
 
