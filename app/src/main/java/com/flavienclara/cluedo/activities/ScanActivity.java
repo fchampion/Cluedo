@@ -1,6 +1,10 @@
 package com.flavienclara.cluedo.activities;
 
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -42,8 +46,11 @@ public class ScanActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ScanActivity.this, QrreaderActivity.class);
-                startActivity(intent);
+
+
+                    Intent intent = new Intent(ScanActivity.this, QrreaderActivity.class);
+                    startActivity(intent);
+
             }
         });
 
