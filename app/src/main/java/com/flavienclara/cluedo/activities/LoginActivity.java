@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void insertSQLiteData(){
 
-        /*CategorieElementADO catADO = new CategorieElementADO();
+        CategorieElementADO catADO = new CategorieElementADO();
         ElementADO elementADO = new ElementADO();
         GroupeADO groupeADO = new GroupeADO();
 
@@ -111,134 +111,134 @@ public class LoginActivity extends AppCompatActivity {
         grp1.setNom("Groupe1");
         grp1.setNbPoint(0);
         grp1.setCode(546135);
-        grp1.setId(GroupeADO.insert(grp1));
+        grp1.setId(groupeADO.insert(grp1));
 
         //création des categories d'elements
         CategorieElement cat1 = new CategorieElement();
         cat1.setNom("Personnages");
-        cat1.setId(CategorieElementADO.insert(cat1));
+        cat1.setId(catADO.insert(cat1));
 
         CategorieElement cat2 = new CategorieElement();
         cat2.setNom("Armes");
-        cat2.setId(CategorieElementADO.insert(cat2));
+        cat2.setId(catADO.insert(cat2));
 
         CategorieElement cat3 = new CategorieElement();
         cat3.setNom("Lieux");
-        cat3.setId(CategorieElementADO.insert(cat3));
+        cat3.setId(catADO.insert(cat3));
 
         //créations d'elements Personnages
         Element e1 = new Element();
         e1.setNom("Léopold Amploit");
         e1.setCategorieId(cat1.getId());
-        e1.setId(ElementADO.insert(e1));
+        e1.setId(elementADO.insert(e1));
 
         Element e2 = new Element();
         e2.setNom("Captain Morgan");
         e2.setCategorieId(cat1.getId());
-        e2.setId(ElementADO.insert(e2));
+        e2.setId(elementADO.insert(e2));
 
         Element e3 = new Element();
         e3.setNom("Hanibal Serveur");
         e3.setCategorieId(cat1.getId());
-        e3.setId(ElementADO.insert(e3));
+        e3.setId(elementADO.insert(e3));
 
         Element e4 = new Element();
         e4.setNom("Hejaren Enudden");
         e4.setCategorieId(cat1.getId());
-        e4.setId(ElementADO.insert(e4));
+        e4.setId(elementADO.insert(e4));
 
         Element e5 = new Element();
         e5.setNom("Alexandra Ledermann");
         e5.setCategorieId(cat1.getId());
-        e5.setId(ElementADO.insert(e5));
+        e5.setId(elementADO.insert(e5));
 
         Element e6 = new Element();
         e6.setNom("Soeur Marie-Thérèse");
         e6.setCategorieId(cat1.getId());
-        e6.setId(ElementADO.insert(e6));
+        e6.setId(elementADO.insert(e6));
 
 
         //créations d'elements Armes
         Element a1 = new Element();
         a1.setNom("Coupe papier");
         a1.setCategorieId(cat2.getId());
-        a1.setId(ElementADO.insert(a1));
+        a1.setId(elementADO.insert(a1));
 
         Element a2 = new Element();
         a2.setNom("Café empoisonné");
         a2.setCategorieId(cat2.getId());
-        a2.setId(ElementADO.insert(a2));
+        a2.setId(elementADO.insert(a2));
 
         Element a3 = new Element();
         a3.setNom("Chaussure à talon");
         a3.setCategorieId(cat2.getId());
-        a3.setId(ElementADO.insert(a3));
+        a3.setId(elementADO.insert(a3));
 
         Element a4 = new Element();
         a4.setNom("Lance patate");
         a4.setCategorieId(cat2.getId());
-        a4.setId(ElementADO.insert(a4));
+        a4.setId(elementADO.insert(a4));
 
         Element a5 = new Element();
         a5.setNom("Nokia 3310");
         a5.setCategorieId(cat2.getId());
-        a5.setId(ElementADO.insert(a5));
+        a5.setId(elementADO.insert(a5));
 
         Element a6 = new Element();
         a6.setNom("Câble réseau");
         a6.setCategorieId(cat2.getId());
-        a6.setId(ElementADO.insert(a6));
+        a6.setId(elementADO.insert(a6));
 
         //créations d'elements Lieux
         Element l1 = new Element();
         l1.setNom("Collegiale");
         l1.setCategorieId(cat3.getId());
-        l1.setId(ElementADO.insert(l1));
+        l1.setId(elementADO.insert(l1));
 
         Element l2 = new Element();
         l2.setNom("CDI");
         l2.setCategorieId(cat3.getId());
-        l2.setId(ElementADO.insert(l2));
+        l2.setId(elementADO.insert(l2));
 
         Element l3 = new Element();
         l3.setNom("Salle des Archives");
         l3.setCategorieId(cat3.getId());
-        l3.setId(ElementADO.insert(l3));
+        l3.setId(elementADO.insert(l3));
 
         Element l4 = new Element();
         l4.setNom("Machine à café");
         l4.setCategorieId(cat3.getId());
-        l4.setId(ElementADO.insert(l4));
+        l4.setId(elementADO.insert(l4));
 
         Element l5 = new Element();
         l5.setNom("Bureau de la directrice");
         l5.setCategorieId(cat3.getId());
-        l5.setId(ElementADO.insert(l5));
+        l5.setId(elementADO.insert(l5));
 
         Element l6 = new Element();
         l6.setNom("Gymnase");
         l6.setCategorieId(cat3.getId());
-        l6.setId(ElementADO.insert(l6));
+        l6.setId(elementADO.insert(l6));
 
         Element l7 = new Element();
         l7.setNom("Toilettes B13");
         l7.setCategorieId(cat3.getId());
-        l7.setId(ElementADO.insert(l7));
+        l7.setId(elementADO.insert(l7));
 
         Element l8 = new Element();
         l8.setNom("Salle examen");
         l8.setCategorieId(cat3.getId());
-        l8.setId(ElementADO.insert(l8));
+        l8.setId(elementADO.insert(l8));
 
         Element l9 = new Element();
         l9.setNom("Voiture");
         l9.setCategorieId(cat3.getId());
-        l9.setId(ElementADO.insert(l9));
+        l9.setId(elementADO.insert(l9));
 
         Element l10 = new Element();
         l10.setNom("Ateliers");
         l10.setCategorieId(cat3.getId());
-        l10.setId(ElementADO.insert(l10));*/
+        l10.setId(elementADO.insert(l10));
 
     }
 
