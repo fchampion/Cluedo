@@ -44,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
        // insertSQLiteData();
+
         lesGroupes = new ArrayList<>();
         lesGroupes = groupeADO.getAllElements();
 
