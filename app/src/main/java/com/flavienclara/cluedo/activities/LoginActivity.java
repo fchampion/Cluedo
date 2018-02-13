@@ -42,8 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         dbHelper = new DBHelper();
         DatabaseManager.initializeInstance(dbHelper);
 
-        insertSQLiteData();
-
+        //insertSQLiteData();
 
         if(connected != null){
             setContentView(R.layout.activity_logout);
