@@ -40,17 +40,17 @@ public class RecyclerViewElementAdapter extends RecyclerView.Adapter<RecyclerVie
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView categorie;
+        //private TextView categorie;
         private TextView elem;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            categorie = (TextView) itemView.findViewById(R.id.libelle_categorie);
+            //categorie = (TextView) itemView.findViewById(R.id.libelle_categorie);
             elem = (TextView) itemView.findViewById(R.id.libelle_element);
         }
 
         public void bind(final Element item, final OnItemClickListener listener) {
-            categorie.setText(String.valueOf(item.getCategorieId()));
+            //categorie.setText(String.valueOf(item.getCategorieId()));
             elem.setText(item.getNom());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
