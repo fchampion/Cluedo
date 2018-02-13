@@ -60,8 +60,8 @@ public class GroupeADO {
             Groupe groupe = new Groupe();
             groupe.setId(c.getInt(0));
             groupe.setNom(c.getString(1));
-            groupe.setNbPoint(c.getInt(2));
-            groupe.setCode(c.getInt(3));
+            groupe.setCode(c.getInt(2));
+            groupe.setNbPoint(c.getInt(3));
             groupeList.add(groupe);
         }
         c.close();

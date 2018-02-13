@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,8 +40,11 @@ public class LoginActivity extends AppCompatActivity {
         context = this.getApplicationContext();
         dbHelper = new DBHelper();
         DatabaseManager.initializeInstance(dbHelper);
+        GroupeADO groupeADO = new GroupeADO();
 
-        insertSQLiteData();
+        //insertSQLiteData();
+        lesGroupes = new ArrayList<>();
+        lesGroupes = groupeADO.getAllElements();
 
 
         if(connected != null){
@@ -70,14 +72,13 @@ public class LoginActivity extends AppCompatActivity {
                     error.setText("");
                     //si le champ code est vide
                     if (code.getText().toString().equals("")) {
-                        error.setText("Veuillez remplir tous les champs.");
+                        error.setText("Veuillez renseigner le code de connexion.");
                     } else {
                         //parcours les groupes
                         for (Groupe g : lesGroupes) {
                             //si le code du groupe = code entré
-                            if (String.valueOf(g.getCode()).equals(code.getText())) {
-                                //setCode(g);
-                                //on ouvre l'intent  (Remplacer Activity par L'activité de la liste d'acceuil)
+                            if (String.valueOf(g.getCode()).equals(code.getText().toString())) {
+                                setGroupe(g);
                                 Intent i = new Intent(LoginActivity.this, ListActivity.class);
                                 startActivity(i);
                                 //sinon on affiche code incorrect
@@ -87,14 +88,17 @@ public class LoginActivity extends AppCompatActivity {
                         }
 
                     }
-                    //A retirer pour eviter la connexion
+                    /*A retirer c'est pour eviter la connexion
                     Intent i = new Intent(LoginActivity.this, ListActivity.class);
-                    startActivity(i);
+                    startActivity(i);*/
                 }
             });
         }
     }
 
+    public void setGroupe(Groupe groupe) {
+        this.connected = groupe;
+    }
     public static Context getContext(){
         return context;
     }
@@ -110,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
         Groupe grp1 = new Groupe();
         grp1.setNom("Groupe1");
         grp1.setNbPoint(0);
-        grp1.setCode(546135);
+        grp1.setCode(123456);
         grp1.setId(groupeADO.insert(grp1));
 
         //création des categories d'elements

@@ -23,7 +23,7 @@ public class DBHelper extends SQLiteOpenHelper {
     //version number.
     private static final int DATABASE_VERSION =1;
     // Database Name
-    private static final String DATABASE_NAME = "gestionBancaire.db";
+    private static final String DATABASE_NAME = "cluedo.db";
     private static final String TAG = DBHelper.class.getSimpleName().toString();
 
     public DBHelper( ) {
