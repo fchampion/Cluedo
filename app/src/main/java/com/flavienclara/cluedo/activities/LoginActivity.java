@@ -9,6 +9,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.Toast;
+
 
 import com.flavienclara.cluedo.R;
 import com.flavienclara.cluedo.classes.Groupe;
@@ -21,6 +28,7 @@ import com.flavienclara.cluedo.ADO.GroupeADO;
 
 import com.flavienclara.cluedo.tools.DBHelper;
 import com.flavienclara.cluedo.tools.DatabaseManager;
+import com.flavienclara.cluedo.tools.HttpHandler;
 
 import java.util.ArrayList;
 
@@ -29,6 +37,7 @@ import java.util.ArrayList;
  */
 
 public class LoginActivity extends AppCompatActivity {
+    private String TAG = LoginActivity.class.getSimpleName();
     public static Groupe connected;
     public ArrayList<Groupe> lesGroupes;
     private static Context context;
@@ -41,12 +50,12 @@ public class LoginActivity extends AppCompatActivity {
         dbHelper = new DBHelper();
         DatabaseManager.initializeInstance(dbHelper);
         GroupeADO groupeADO = new GroupeADO();
-
-
-       // insertSQLiteData();
-
-        lesGroupes = new ArrayList<>();
-        lesGroupes = groupeADO.getAllElements();
+        if(groupeADO.getAllElements()== null){
+            Log.e(TAG, "base vide, je charge la base local");
+            new GetLogins().execute();
+        }else{
+            Log.e(TAG, "base déjà existante, je ne fais rien");
+        }
 
 
         if(connected != null){
@@ -71,6 +80,9 @@ public class LoginActivity extends AppCompatActivity {
             btnConnexion.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    GroupeADO groupeADO = new GroupeADO();
+                    lesGroupes = new ArrayList<>();
+                    lesGroupes = groupeADO.getAllElements();
                     error.setText("");
                     //si le champ code est vide
                     if (code.getText().toString().equals("")) {
@@ -90,11 +102,104 @@ public class LoginActivity extends AppCompatActivity {
                         }
 
                     }
-                    /*A retirer c'est pour eviter la connexion
-                    Intent i = new Intent(LoginActivity.this, ListActivity.class);
-                    startActivity(i);*/
                 }
             });
+        }
+    }
+
+    private class GetLogins extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            CategorieElementADO catADO = new CategorieElementADO();
+            ElementADO elementADO = new ElementADO();
+            GroupeADO groupeADO = new GroupeADO();
+
+
+            HttpHandler sh = new HttpHandler();
+            // Making a request to url and getting response
+            String url = "http://172.20.0.147/Test.json";
+            String jsonStr = sh.makeServiceCall(url);
+
+            //Log.e(TAG, "Response from url: " + jsonStr);
+            if (jsonStr != null) {
+                try {
+                    JSONObject jsonObj = new JSONObject(jsonStr);
+
+                    // Getting JSON Array node
+                    JSONArray logins = jsonObj.getJSONArray("Groupe");
+                    JSONArray categories = jsonObj.getJSONArray("CategorieElement");
+                    JSONArray elems = jsonObj.getJSONArray("Element");
+
+                    // looping through All Logins
+                    for (int i = 0; i < logins.length(); i++) {
+
+                        JSONObject c = logins.getJSONObject(i);
+                        Groupe grp = new Groupe();
+                        grp.setNom(c.getString("nom"));
+                        grp.setNbPoint(c.getInt("nbPoint"));
+                        grp.setCode(c.getInt("code"));
+                        grp.setId(c.getInt("id"));
+                        groupeADO.insert(grp);
+
+                    }
+                    // looping through All Categorie Element
+                    for (int i = 0; i < categories.length(); i++) {
+
+                        JSONObject c = categories.getJSONObject(i);
+                        CategorieElement cat = new CategorieElement();
+                        cat.setNom(c.getString("nom"));
+                        cat.setId(c.getInt("id"));
+                        catADO.insert(cat);
+                    }
+                    // looping through All Element
+                    for (int i = 0; i < elems.length(); i++) {
+
+                        JSONObject c = elems.getJSONObject(i);
+
+                        Element el = new Element();
+                        el.setNom(c.getString("nom"));
+                        el.setCategorieId(c.getInt("categorieElementId"));
+                        el.setId(c.getInt("id"));
+                        elementADO.insert(el);
+                    }
+
+                } catch (final JSONException e) {
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    "Erreur d'import, le format est érroné",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+                }
+
+            } else {
+                Log.e(TAG, "Couldn't get json from server.");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),
+                                "Vérifiez votre connexion internet et relancez l'application",
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
         }
     }
 
@@ -245,7 +350,6 @@ public class LoginActivity extends AppCompatActivity {
         l10.setNom("Ateliers");
         l10.setCategorieId(cat3.getId());
         l10.setId(elementADO.insert(l10));
-
     }
 
 }

@@ -24,14 +24,12 @@ public class ElementADO {
         return "CREATE TABLE " + Element.TABLE  + "("
                 + Element.KEY_ElementID  + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
                 + Element.KEY_ElementNom + " TEXT, "
-                + Element.KEY_url + " TEXT, "
                 + Element.KEY_CategorieID   + " INTEGER )";
     }
     public int insert(Element elem) {
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
         ContentValues values = new ContentValues();
         values.put(Element.KEY_ElementNom, elem.getNom());
-        values.put(Element.KEY_url, elem.getUrl());
         values.put(Element.KEY_CategorieID, elem.getCategorieId());
         // Inserting Row
         long id = db.insert(elem.TABLE, null, values);
@@ -57,8 +55,7 @@ public class ElementADO {
             Element elem = new Element();
             elem.setId(c.getInt(0));
             elem.setNom(c.getString(1));
-            elem.setUrl(c.getString(2));
-            elem.setCategorieId(c.getInt(3));
+            elem.setCategorieId(c.getInt(2));
             elementList.add(elem);
         }
         c.close();
